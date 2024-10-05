@@ -1,0 +1,24 @@
+# Inside your project's root directory, run this:
+npm init -y
+
+# Installs Webpack for the project
+npm install --save-dev webpack webpack-cli
+
+# This bundles your code/updates dist, but can likely skip this step and just
+# install the server
+npx webpack
+
+# To handle HTML files
+npm install --save-dev html-webpack-plugin
+
+# To handle CSS files
+npm install --save-dev style-loader css-loader
+
+# Optional - If referencing image files in the HTML template
+npm install --save-dev html-loader
+
+# So your page will auto-restart whenever you change any of the bundled files
+npm install --save-dev webpack-dev-server
+
+# Then after installing the server, start it with:
+npx webpack serve
