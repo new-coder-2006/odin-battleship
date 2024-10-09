@@ -3,9 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Battleship</title>
 </head>
 <body>
-    
+    <h1>Place Your Ships</h1>
+    <form action="/submit" method="POST">
+        <label for="carrier-row">Carrier Row:</label>
+        <input type="number" id="carrier-row" name="carrier-row" required>
+        <label for="carrier-col">Carrier Column:</label>
+        <input type="number" id="carrier-col" name="carrier-col" required>
+        <label for="carrier-ori">Carrier Orientation:</label>
+        <input type="text" id="carrier-ori" name="carrier-ori" required>
+
+        <label for="battleship-row">Battleship Row:</label>
+        <input type="number" id="battleship-row" name="battleship-row" required>
+        <label for="battleship-col">Battleship Column:</label>
+        <input type="number" id="battleship-col" name="battleship-col" required>
+        <label for="battleship-ori">Battleship Orientation:</label>
+        <input type="text" id="battleship-ori" name="battleship-ori" required>
+
+        <label for="cruiser-row">Cruiser Row:</label>
+        <input type="number" id="cruiser-row" name="cruiser-row" required>
+        <label for="cruiser-col">Cruiser Column:</label>
+        <input type="number" id="cruiser-col" name="cruiser-col" required>
+        <label for="cruiser-ori">Cruiser Orientation:</label>
+        <input type="text" id="cruiser-ori" name="cruiser-ori" required>
+
+        <label for="sub-row">Submarine Row:</label>
+        <input type="number" id="sub-row" name="sub-row" required>
+        <label for="sub-col">Submarine Column:</label>
+        <input type="number" id="sub-col" name="sub-col" required>
+        <label for="sub-ori">Submarine Orientation:</label>
+        <input type="text" id="sub-ori" name="sub-ori" required>
+
+        <label for="destroyer-row">Destroyer Row:</label>
+        <input type="number" id="destroyer-row" name="destroyer-row" required>
+        <label for="destroyer-col">Destroyer Column:</label>
+        <input type="number" id="destroyer-col" name="destroyer-col" required>
+        <label for="destroyer-ori">Destroyer Orientation:</label>
+        <input type="text" id="destroyer-ori" name="destroyer-ori" required>
+    </form>
 </body>
 </html>
