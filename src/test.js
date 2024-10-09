@@ -1,5 +1,5 @@
-const Ship = require("./ship");
-const Gameboard = require("./gameboard");
+import { Ship } from "./ship";
+import { Gameboard } from "./gameboard";
 
 function shipTests() {
     test("ship of 0 length already sunk", () => {

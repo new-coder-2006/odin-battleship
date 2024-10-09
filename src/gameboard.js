@@ -1,4 +1,4 @@
-const Ship = require("./ship");
+import { Ship } from "./ship";
 
 export class Gameboard {
     constructor(rows, cols) {
@@ -90,5 +90,3 @@ export class Gameboard {
         return this.misses;
     }
 }
-
-module.exports = Gameboard;
