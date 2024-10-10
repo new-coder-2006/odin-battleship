@@ -126,7 +126,8 @@ function createBoard(boardType, rows, cols) {
 }
 
 function displayBoard() {
-    document.body.innerHTML = "";
+    const mainContainer = document.querySelector(".main-container");
+    mainContainer.innerHTML = "";
 
     const boardContainer = document.createElement("div");
     boardContainer.setAttribute("class", "board");
@@ -134,7 +135,7 @@ function displayBoard() {
     boardContainer.appendChild(createBoard("player", ROWS, COLS));
     boardContainer.appendChild(createBoard("computer", ROWS, COLS));
 
-    document.body.appendChild(boardContainer);
+    mainContainer.appendChild(boardContainer);
 }
 
 export function getShipCoords() {

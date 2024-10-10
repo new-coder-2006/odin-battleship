@@ -6,60 +6,63 @@
     <title>Battleship</title>
 </head>
 <body>
-    <h1>Place Your Ships</h1>
-    <form class="ships-form">
-        <label for="carrier-row">Carrier Row:</label>
-        <input type="number" id="carrier-row" name="carrier-row" min="1" max="10" step="1" required>
-        <label for="carrier-col">Carrier Column:</label>
-        <input type="number" id="carrier-col" name="carrier-col" min="1" max="10" step="1" required>
-        <label for="carrier-ori">Carrier Orientation:</label>
-        <select id="carrier-ori" name="carrier-ori" required>
-            <option value="horizontal">Horizontal</option>
-            <option value="vertical">Vertical</option>
-        </select>
+    <img src="images/battleship-logo.jpg" alt="Logo for the game Battleship">
+    <div class="main-container">
+        <h1>Place Your Ships</h1>
+        <form class="ships-form">
+            <label for="carrier-row">Carrier Row:</label>
+            <input type="number" id="carrier-row" name="carrier-row" min="1" max="10" step="1" required>
+            <label for="carrier-col">Carrier Column:</label>
+            <input type="number" id="carrier-col" name="carrier-col" min="1" max="10" step="1" required>
+            <label for="carrier-ori">Carrier Orientation:</label>
+            <select id="carrier-ori" name="carrier-ori" required>
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+            </select>
 
-        <label for="battleship-row">Battleship Row:</label>
-        <input type="number" id="battleship-row" name="battleship-row" min="1" max="10" step="1" required>
-        <label for="battleship-col">Battleship Column:</label>
-        <input type="number" id="battleship-col" name="battleship-col" min="1" max="10" step="1" required>
-        <label for="battleship-ori">Battleship Orientation:</label>
-        <select id="battleship-ori" name="battleship-ori" required>
-            <option value="horizontal">Horizontal</option>
-            <option value="vertical">Vertical</option>
-        </select>
+            <label for="battleship-row">Battleship Row:</label>
+            <input type="number" id="battleship-row" name="battleship-row" min="1" max="10" step="1" required>
+            <label for="battleship-col">Battleship Column:</label>
+            <input type="number" id="battleship-col" name="battleship-col" min="1" max="10" step="1" required>
+            <label for="battleship-ori">Battleship Orientation:</label>
+            <select id="battleship-ori" name="battleship-ori" required>
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+            </select>
 
-        <label for="cruiser-row">Cruiser Row:</label>
-        <input type="number" id="cruiser-row" name="cruiser-row" min="1" max="10" step="1" required>
-        <label for="cruiser-col">Cruiser Column:</label>
-        <input type="number" id="cruiser-col" name="cruiser-col" min="1" max="10" step="1" required>
-        <label for="cruiser-ori">Cruiser Orientation:</label>
-        <select id="cruiser-ori" name="cruiser-ori" required>
-            <option value="horizontal">Horizontal</option>
-            <option value="vertical">Vertical</option>
-        </select>
+            <label for="cruiser-row">Cruiser Row:</label>
+            <input type="number" id="cruiser-row" name="cruiser-row" min="1" max="10" step="1" required>
+            <label for="cruiser-col">Cruiser Column:</label>
+            <input type="number" id="cruiser-col" name="cruiser-col" min="1" max="10" step="1" required>
+            <label for="cruiser-ori">Cruiser Orientation:</label>
+            <select id="cruiser-ori" name="cruiser-ori" required>
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+            </select>
 
-        <label for="submarine-row">Submarine Row:</label>
-        <input type="number" id="submarine-row" name="submarine-row" min="1" max="10" step="1" required>
-        <label for="submarine-col">Submarine Column:</label>
-        <input type="number" id="submarine-col" name="submarine-col" min="1" max="10" step="1" required>
-        <label for="submarine-ori">Submarine Orientation:</label>
-        <select id="submarine-ori" name="submarine-ori" required>
-            <option value="horizontal">Horizontal</option>
-            <option value="vertical">Vertical</option>
-        </select>
+            <label for="submarine-row">Submarine Row:</label>
+            <input type="number" id="submarine-row" name="submarine-row" min="1" max="10" step="1" required>
+            <label for="submarine-col">Submarine Column:</label>
+            <input type="number" id="submarine-col" name="submarine-col" min="1" max="10" step="1" required>
+            <label for="submarine-ori">Submarine Orientation:</label>
+            <select id="submarine-ori" name="submarine-ori" required>
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+            </select>
 
-        <label for="destroyer-row">Destroyer Row:</label>
-        <input type="number" id="destroyer-row" name="destroyer-row" min="1" max="10" step="1" required>
-        <label for="destroyer-col">Destroyer Column:</label>
-        <input type="number" id="destroyer-col" name="destroyer-col" min="1" max="10" step="1" required>
-        <label for="destroyer-ori">Destroyer Orientation:</label>
-        <select id="destroyer-ori" name="destroyer-ori" required>
-            <option value="horizontal">Horizontal</option>
-            <option value="vertical">Vertical</option>
-        </select>
+            <label for="destroyer-row">Destroyer Row:</label>
+            <input type="number" id="destroyer-row" name="destroyer-row" min="1" max="10" step="1" required>
+            <label for="destroyer-col">Destroyer Column:</label>
+            <input type="number" id="destroyer-col" name="destroyer-col" min="1" max="10" step="1" required>
+            <label for="destroyer-ori">Destroyer Orientation:</label>
+            <select id="destroyer-ori" name="destroyer-ori" required>
+                <option value="horizontal">Horizontal</option>
+                <option value="vertical">Vertical</option>
+            </select>
 
-        <div id="error-message" style="color: red; display: none;"></div>
-        <button type="button" class="start-game">Start Game</button>
-    </form>
+            <div id="error-message" style="color: red; display: none;"></div>
+            <button type="button" class="start-game">Start Game</button>
+        </form>
+    </div>
 </body>
 </html>
