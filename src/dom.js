@@ -58,9 +58,12 @@ export function calculateCoords(shipType, orientation, startingRow, startingCol)
     const coords = [];
 
     if (
-        (orientation === "horizontal" && (startingCol + length) > COLS) ||
-        (orientation === "vertical" && (startingRow + length) > ROWS) 
+        (orientation === "horizontal" && (Number(startingCol) + length) > COLS) ||
+        (orientation === "vertical" && (Number(startingRow) + length) > ROWS) 
     ) {
+        console.log(length);
+        console.log(startingCol);
+        console.log(startingCol + length);
         throw new Error(shipLowerCase + " does not fit on board; please " +
             "specify appropriate cooridinates");
     }
@@ -91,10 +94,14 @@ function getShipInputs(shipType) {
     const shipCol = document.getElementById(shipLowerCase + "-col").value;
     const shipOri = document.getElementById(shipLowerCase + "-ori").value;
 
-    return {
-        "row": shipRow,
-        "col": shipCol,
-        "orientation": shipOri
+    if (shipRow === "" || shipCol === "") {
+        return false;
+    } else {
+        return {
+            "row": shipRow,
+            "col": shipCol,
+            "orientation": shipOri
+        }
     }
 }
 
@@ -110,6 +117,12 @@ export function getShipCoords() {
 
         for (let ship in SHIP_LENGTHS) {
             const shipInputs = getShipInputs(ship);
+
+            if (!shipInputs) {
+                alert("Please enter row and column numbers for all ships");
+                return;
+            }
+            
             const shipCoords = calculateCoords(
                 ship, 
                 shipInputs["orientation"],
@@ -120,6 +133,8 @@ export function getShipCoords() {
         }
 
         for (let i = 0; i < coordList.length - 1; i++) {
+            console.log(coordList[i]);
+            console.log(coordList[i + 1]);
             if (checkShipOverlap(coordList[i], coordList[i + 1])) {
                 overlapDetected = true;
                 break;
