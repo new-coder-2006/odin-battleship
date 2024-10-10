@@ -1,1 +1,37 @@
 /* styles.css */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("images/battleship-background.jpg");
+    background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+}
+
+.board {
+    display: grid;
+    grid-template-columns: 500px 500px;
+    background-color: rgb(19, 246, 250);
+    height: 510px;
+    width: 1006px;
+}
+
+.computer-board {
+    border-left: solid 5px black;
+}
+
+.player-board {
+    border-right: solid 5px black;
+}
+
+.row {
+    display: grid;
+    grid-template-columns: repeat(10, 50px);
+}
+
+.space {
+    border: solid 0.1px rgb(4, 4, 4);
+    height: 50px;
+    width: 50px;
+}

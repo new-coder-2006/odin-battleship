@@ -105,6 +105,38 @@ function getShipInputs(shipType) {
     }
 }
 
+function createBoard(boardType, rows, cols) {
+    const boardContainer = document.createElement("div");
+    boardContainer.setAttribute("class", boardType + "-board");
+
+    for (let i = 0; i < ROWS; i++) {
+        const rowContainer = document.createElement("div");
+        rowContainer.setAttribute("class", "row");
+
+        for (let i = 0; i < COLS; i++) {
+            const colContainer = document.createElement("div");
+            colContainer.setAttribute("class", "space");
+            rowContainer.appendChild(colContainer);
+        }
+
+        boardContainer.appendChild(rowContainer);
+    }
+
+    return boardContainer;
+}
+
+function displayBoard() {
+    document.body.innerHTML = "";
+
+    const boardContainer = document.createElement("div");
+    boardContainer.setAttribute("class", "board");
+
+    boardContainer.appendChild(createBoard("player", ROWS, COLS));
+    boardContainer.appendChild(createBoard("computer", ROWS, COLS));
+
+    document.body.appendChild(boardContainer);
+}
+
 export function getShipCoords() {
     const startButton = document.querySelector(".start-game");
     const errorMessageDiv = document.getElementById("error-message");
@@ -133,8 +165,6 @@ export function getShipCoords() {
         }
 
         for (let i = 0; i < coordList.length - 1; i++) {
-            console.log(coordList[i]);
-            console.log(coordList[i + 1]);
             if (checkShipOverlap(coordList[i], coordList[i + 1])) {
                 overlapDetected = true;
                 break;
@@ -147,6 +177,8 @@ export function getShipCoords() {
                 "would cause at least two of the ships to overlap on the " +
                 "gameboard. Please enter valid coordinates.";
             errorMessageDiv.style.display = "block"; 
+        } else {
+            displayBoard();
         }
     });
 }
