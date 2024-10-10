@@ -1,5 +1,6 @@
 import { Ship } from "./ship";
 import { Gameboard } from "./gameboard";
+import { arrayIsContained, checkShipOverlap, calculateCoords } from "./dom"; 
 
 function shipTests() {
     test("ship of 0 length already sunk", () => {
@@ -194,6 +195,77 @@ function boardTests() {
             testBoard.receiveAttack(43, 62);
             testBoard.receiveAttack(13, 69);
             expect(testBoard.showMisses()).toStrictEqual([[900, 900], [13, 69]]);
+        }
+    );
+
+    test("arrayIsContained returns true if array is contained in nested array",
+        () => {
+            expect(arrayIsContained([[1, 3], [2, 4], [3, 5]], [1, 3]))
+            .toBe(true);
+        }
+    );
+
+    test("arrayIsContained returns false if array is not contained in nested array",
+        () => {
+            expect(arrayIsContained([[1, 3], [2, 4], [3, 5]], [16, 35]))
+            .toBe(false);
+        }
+    );
+
+    test("shipsOverlap returns true for overlapping ships", 
+        () => {
+            expect(checkShipOverlap(
+                [[1, 3], [1, 4], [1, 5]], 
+                [[1, 3], [2, 3], [3, 3], [4, 3]]
+            )).toBe(true);
+        }
+    );
+
+    test("shipsOverlap returns false for non-overlapping ships", 
+        () => {
+            expect(checkShipOverlap(
+                [[1, 3], [1, 4], [1, 5]], 
+                [[2, 3], [3, 3], [4, 3]]
+            )).toBe(false);
+        }
+    );
+
+    test("calculateCoords accurately calculates coordinates for horizontal ship",
+        () => {
+            expect(calculateCoords("carrier", "horizontal", 1, 1)).toEqual(
+                [[1, 5], [1, 4], [1, 3], [1, 2], [1, 1]]
+            );
+        }
+    );
+
+    test("calculateCoords accurately calculates coordinates for vertical ship",
+        () => {
+            expect(calculateCoords("Battleship", "Vertical", 1, 1)).toEqual(
+                [[4, 1], [3, 1], [2, 1], [1, 1]]
+            );
+        }
+    );
+
+    test("calculateCoords throws error if ship is not a valid ship",
+        () => {
+            expect(() => calculateCoords("patrol boat", "Vertical", 1, 1))
+            .toThrow("calculateCoords requires a valid ship type");
+        }
+    );
+
+    test("calculateCoords throws error if orientation is not horizontal or vertical",
+        () => {
+            expect(() => calculateCoords("destroyer", "diagonal", 1, 1))
+            .toThrow("calculateCoords requires a valid orientation");
+        }
+    );
+
+    test("calculateCoords throws error if not enough room to place a ship at a " +
+        " given coordinate",
+        () => {
+            expect(() => calculateCoords("cruiser", "vertical", 9, 9))
+            .toThrow("cruiser does not fit on board; please " +
+            "specify appropriate cooridinates");
         }
     );
 }

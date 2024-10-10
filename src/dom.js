@@ -19,7 +19,7 @@ const SHIP_LENGTHS = {
  * @param {Array} targetArray array to check
  * @returns true if targetArray is contained in mainArray and false if it isn't
  */
-function arrayIsContained(mainArray, targetArray) {
+export function arrayIsContained(mainArray, targetArray) {
     return mainArray.some(arr => 
       arr.length === targetArray.length && 
       arr.every((value, index) => value === targetArray[index])
@@ -33,7 +33,7 @@ function arrayIsContained(mainArray, targetArray) {
  * @param {Integer Array of Arrays} shipCoords2 
  * @returns true if the ship coordinates overlap, false otherwise
  */
-function checkShipOverlap(shipCoords1, shipCoords2) {
+export function checkShipOverlap(shipCoords1, shipCoords2) {
     for (let i = 0; i < shipCoords1.length; i++) {
         if (arrayIsContained(shipCoords2, shipCoords1[i])) {
             return true;
@@ -43,7 +43,7 @@ function checkShipOverlap(shipCoords1, shipCoords2) {
     return false;
 }
 
-function calculateCoords(shipType, orientation, startingRow, startingCol) {
+export function calculateCoords(shipType, orientation, startingRow, startingCol) {
     const shipLowerCase = shipType.toLowerCase();
     const orientationLowerCase = orientation.toLowerCase();
 
@@ -54,7 +54,7 @@ function calculateCoords(shipType, orientation, startingRow, startingCol) {
         throw new Error("calculateCoords requires a valid orientation");
     }
 
-    const length = SHIP_LENGTHS[shipLowerCase];
+    let length = SHIP_LENGTHS[shipLowerCase];
     const coords = [];
 
     if (
@@ -70,7 +70,7 @@ function calculateCoords(shipType, orientation, startingRow, startingCol) {
             coords.push([startingRow, startingCol + length - 1]);
             length--;
         }
-    } else if (orientationLowerCase === "veritcal") {
+    } else if (orientationLowerCase === "vertical") {
         while (length > 0) {
             coords.push([startingRow + length - 1, startingCol]);
             length--;
