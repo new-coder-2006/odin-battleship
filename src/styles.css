@@ -18,6 +18,10 @@ body {
     width: 1006px;
 }
 
+.board-label{
+    font-family: 'Battambang', sans-serif;
+}
+
 .board-label {
     color: white;
 }
@@ -29,6 +33,13 @@ body {
 
 .computer-board {
     border-left: solid 5px black;
+}
+
+.error-message {
+    width: 700px;
+    color: red;
+    display: none;
+    line-height: 1.2;
 }
 
 .player-board {

@@ -150,7 +150,7 @@ function displayBoard() {
 
 export function getShipCoords() {
     const startButton = document.querySelector(".start-game");
-    const errorMessageDiv = document.getElementById("error-message");
+    const errorMessageDiv = document.querySelector(".error-message");
 
     startButton.addEventListener("click", () => {
         const coordList = [];
