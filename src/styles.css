@@ -1,6 +1,5 @@
 /* styles.css */
 body {
-    
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -19,6 +18,10 @@ body {
     width: 1006px;
 }
 
+.board-label {
+    color: white;
+}
+
 .computer-board {
     border-left: solid 5px black;
 }
@@ -32,8 +35,49 @@ body {
     grid-template-columns: repeat(10, 50px);
 }
 
+.ship {
+    display: grid;
+    grid-template-columns: 125px 50px 150px 50px 175px 100px;
+    gap: 10px;
+}
+
+.ships-form {
+    background-color:rgb(19, 246, 250);
+    padding: 10px;
+    border-radius: 5px
+}
+
 .space {
     border: solid 0.1px rgb(4, 4, 4);
     height: 50px;
     width: 50px;
 }
+
+.start-game {
+    background-color: #007BFF; /* Blue color */
+    color: white;
+    padding: 15px 30px; /* Increase padding for a larger button */
+    font-size: 18px; /* Make the text larger */
+    font-weight: bold; /* Bold text */
+    border: none; /* Remove default button border */
+    border-radius: 8px; /* Rounded corners */
+    cursor: pointer; /* Pointer cursor on hover */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Soft shadow for a 3D effect */
+    transition: background-color 0.3s, box-shadow 0.3s; /* Smooth hover transitions */
+  }
+  
+  .start-game:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3); /* Enhance shadow on hover */
+  }
+  
+  .start-game:active {
+    background-color: #004080; /* Even darker blue when pressed */
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2); /* Shrink shadow on press */
+  }
+  
+  .start-game:focus {
+    outline: none; /* Remove default outline */
+    box-shadow: 0px 0px 0px 4px rgba(0, 123, 255, 0.5); /* Blue glow on focus */
+  }
+  

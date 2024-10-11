@@ -109,11 +109,11 @@ function createBoard(boardType, rows, cols) {
     const boardContainer = document.createElement("div");
     boardContainer.setAttribute("class", boardType + "-board");
 
-    for (let i = 0; i < ROWS; i++) {
+    for (let i = 0; i < rows; i++) {
         const rowContainer = document.createElement("div");
         rowContainer.setAttribute("class", "row");
 
-        for (let i = 0; i < COLS; i++) {
+        for (let i = 0; i < cols; i++) {
             const colContainer = document.createElement("div");
             colContainer.setAttribute("class", "space");
             rowContainer.appendChild(colContainer);
@@ -134,6 +134,16 @@ function displayBoard() {
 
     boardContainer.appendChild(createBoard("player", ROWS, COLS));
     boardContainer.appendChild(createBoard("computer", ROWS, COLS));
+
+    const playerBoardLabel = document.createElement("h1");
+    playerBoardLabel.textContent = "Your Board";
+    playerBoardLabel.setAttribute("class", "board-label");
+    boardContainer.appendChild(playerBoardLabel);
+
+    const computerBoardLabel = document.createElement("h1");
+    computerBoardLabel.textContent = "Computer's Board";
+    computerBoardLabel.setAttribute("class", "board-label");
+    boardContainer.appendChild(computerBoardLabel);
 
     mainContainer.appendChild(boardContainer);
 }
