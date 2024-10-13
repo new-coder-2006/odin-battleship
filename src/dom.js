@@ -1,6 +1,11 @@
 import {Gameboard} from "./gameboard.js";
 import {Ship} from "./ship.js";
 import {RealPlayer, ComputerPlayer} from "./player.js";
+import carrier from "./images/carrier.png";
+import battleship from "./images/battleship.png";
+import cruiser from "./images/cruiser.png";
+import submarine from "./images/submarine.png";
+import destroyer from "./images/destroyer.png";
 
 const ROWS = 10;
 const COLS = 10;
@@ -10,6 +15,13 @@ const SHIP_LENGTHS = {
     "cruiser": 3,
     "submarine": 3,
     "destroyer": 2
+}
+const SHIP_ICONS = {
+    "carrier": carrier,
+    "battleship": battleship,
+    "cruiser": cruiser,
+    "submarine": submarine,
+    "destroyer": destroyer
 }
 
 /**
@@ -61,9 +73,6 @@ export function calculateCoords(shipType, orientation, startingRow, startingCol)
         (orientation === "horizontal" && (Number(startingCol) + length) > COLS) ||
         (orientation === "vertical" && (Number(startingRow) + length) > ROWS) 
     ) {
-        console.log(length);
-        console.log(startingCol);
-        console.log(startingCol + length);
         throw new Error(shipLowerCase + " does not fit on board; please " +
             "specify appropriate cooridinates");
     }
@@ -98,24 +107,40 @@ function getShipInputs(shipType) {
         return false;
     } else {
         return {
-            "row": shipRow,
-            "col": shipCol,
+            "ship": shipType,
+            "row": Number(shipRow),
+            "col": Number(shipCol),
             "orientation": shipOri
         }
     }
 }
 
-function createBoard(boardType, rows, cols) {
+function createBoard(boardType, rows, cols, shipInputs) {
     const boardContainer = document.createElement("div");
     boardContainer.setAttribute("class", boardType + "-board");
+    console.log(shipInputs);
 
     for (let i = 0; i < rows; i++) {
         const rowContainer = document.createElement("div");
         rowContainer.setAttribute("class", "row");
 
-        for (let i = 0; i < cols; i++) {
+        for (let j = 0; j < cols; j++) {
             const colContainer = document.createElement("div");
             colContainer.setAttribute("class", "space");
+            
+            if (boardType === "player") {
+                for (let k = 0; k < shipInputs.length; k++) {
+                    if (arrayIsContained(shipInputs[k]["shipCoords"], [i + 1, j + 1])) {
+                        const shipIcon = document.createElement("img");
+                        shipIcon.setAttribute("class", "ship-icon");
+                        shipIcon.src = SHIP_ICONS[shipInputs[k]["ship"]];
+                        shipIcon.alt = shipInputs[k]["ship"];
+                        colContainer.appendChild(shipIcon);
+                        break;
+                    }
+                }
+            }
+
             rowContainer.appendChild(colContainer);
         }
 
@@ -125,15 +150,15 @@ function createBoard(boardType, rows, cols) {
     return boardContainer;
 }
 
-function displayBoard() {
+function displayBoard(shipInputs) {
     const mainContainer = document.querySelector(".main-container");
     mainContainer.innerHTML = "";
 
     const boardContainer = document.createElement("div");
     boardContainer.setAttribute("class", "board");
 
-    boardContainer.appendChild(createBoard("player", ROWS, COLS));
-    boardContainer.appendChild(createBoard("computer", ROWS, COLS));
+    boardContainer.appendChild(createBoard("player", ROWS, COLS, shipInputs));
+    boardContainer.appendChild(createBoard("computer", ROWS, COLS, shipInputs));
 
     const playerBoardLabel = document.createElement("h1");
     playerBoardLabel.textContent = "Your Board";
@@ -158,6 +183,8 @@ export function getShipCoords() {
 
         errorMessageDiv.style.display = "none";
 
+        const listOfShipInputs = [];
+
         for (let ship in SHIP_LENGTHS) {
             const shipInputs = getShipInputs(ship);
 
@@ -172,7 +199,10 @@ export function getShipCoords() {
                 shipInputs["row"],
                 shipInputs["col"]
             );
+
             coordList.push(shipCoords);
+            shipInputs["shipCoords"] = shipCoords;
+            listOfShipInputs.push(shipInputs);
         }
 
         for (let i = 0; i < coordList.length - 1; i++) {
@@ -189,7 +219,7 @@ export function getShipCoords() {
                 "gameboard. Please enter valid coordinates.";
             errorMessageDiv.style.display = "block"; 
         } else {
-            displayBoard();
+            displayBoard(listOfShipInputs);
         }
     });
 }

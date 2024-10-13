@@ -67,6 +67,11 @@ body {
     font-size: 15px;
 }
 
+.ship-icon {
+    height: 50px;
+    width: 50px;
+}
+
 .space {
     border: solid 0.1px rgb(4, 4, 4);
     height: 50px;
