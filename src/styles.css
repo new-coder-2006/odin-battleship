@@ -10,6 +10,11 @@ body {
     background-repeat: no-repeat; 
 }
 
+.battleship-logo {
+    height: 200px;
+    width: auto;
+}
+
 .board {
     display: grid;
     grid-template-columns: 500px 500px;
@@ -42,6 +47,12 @@ body {
     line-height: 1.2;
 }
 
+.header {
+    color: white;
+    display: flex;
+    flex-direction: column;
+}
+
 .player-board {
     border-right: solid 5px black;
 }
@@ -67,7 +78,7 @@ body {
     font-size: 15px;
 }
 
-.ship-icon {
+.ship-icon, .blast-icon, .miss-icon {
     height: 50px;
     width: 50px;
 }

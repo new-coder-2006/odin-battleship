@@ -1,10 +1,12 @@
 import { Ship } from "./ship";
+import { arrayIsContained } from "./dom";
 
 export class Gameboard {
     constructor(rows, cols) {
         this.board = Array(rows).fill().map(() => Array(cols).fill('_'));
         this.misses = [];
         this.ships = [];
+        this.attackedSpaces = [];
     }
 
     placeShip(row, col, shipLength, orientation) {
@@ -63,11 +65,15 @@ export class Gameboard {
         ) {
             throw new Error("Coordinates out of bounds. Please enter valid " +
                 "coordinates");
+        } else if (arrayIsContained(this.attackedSpaces, [row, col])) {
+            throw new Error("This space has already been attacked");
         } else if (this.board[row][col] === "_") {
             this.misses.push([row, col]);
+            this.attackedSpaces.push([row, col]);
             return false;
         } else {
             this.board[row][col].hit();
+            this.attackedSpaces.push([row, col]);
             return true;
         }
     }
@@ -88,5 +94,9 @@ export class Gameboard {
 
     showMisses() {
         return this.misses;
+    }
+
+    showAttackedSpaces() {
+        return this.attackedSpaces;
     }
 }

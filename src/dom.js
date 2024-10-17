@@ -6,6 +6,9 @@ import battleship from "./images/battleship.png";
 import cruiser from "./images/cruiser.png";
 import submarine from "./images/submarine.png";
 import destroyer from "./images/destroyer.png";
+import blast from "./images/blast.png";
+import miss from "./images/x.png";
+
 
 const ROWS = 10;
 const COLS = 10;
@@ -118,7 +121,6 @@ function getShipInputs(shipType) {
 function createBoard(boardType, rows, cols, shipInputs) {
     const boardContainer = document.createElement("div");
     boardContainer.setAttribute("class", boardType + "-board");
-    console.log(shipInputs);
 
     for (let i = 0; i < rows; i++) {
         const rowContainer = document.createElement("div");
@@ -127,6 +129,7 @@ function createBoard(boardType, rows, cols, shipInputs) {
         for (let j = 0; j < cols; j++) {
             const colContainer = document.createElement("div");
             colContainer.setAttribute("class", "space");
+            colContainer.setAttribute("id", String(i) + String(j));
             
             if (boardType === "player") {
                 for (let k = 0; k < shipInputs.length; k++) {
@@ -157,8 +160,11 @@ function displayBoard(shipInputs) {
     const boardContainer = document.createElement("div");
     boardContainer.setAttribute("class", "board");
 
-    boardContainer.appendChild(createBoard("player", ROWS, COLS, shipInputs));
-    boardContainer.appendChild(createBoard("computer", ROWS, COLS, shipInputs));
+    const playerBoard = createBoard("player", ROWS, COLS, shipInputs);
+    const computerBoard = createBoard("computer", ROWS, COLS, shipInputs);
+
+    boardContainer.appendChild(playerBoard);
+    boardContainer.appendChild(computerBoard);
 
     const playerBoardLabel = document.createElement("h1");
     playerBoardLabel.textContent = "Your Board";
@@ -171,6 +177,53 @@ function displayBoard(shipInputs) {
     boardContainer.appendChild(computerBoardLabel);
 
     mainContainer.appendChild(boardContainer);
+
+    return {"player": playerBoard, "computer": computerBoard};
+}
+
+function turn(playerBoard, computerBoard, playerTurn) {
+    const player = new RealPlayer(ROWS, COLS, playerBoard);
+    const computer = new ComputerPlayer(ROWS, COLS, computerBoard);
+
+    if (playerTurn) {
+        const header = document.querySelector(".header");
+        const yourTurn = document.createElement("h1");
+        yourTurn.textContent = "It's your turn! Click a space on the " + 
+            "computer's board to attack!";
+        header.appendChild(yourTurn);
+
+        const spaces = computerBoard.querySelectorAll(".space");
+        const computerGameboard = computer.getGameboard();
+
+        spaces.forEach(space => {
+            space.addEventListener("click", () => {
+                const row = Number(space.id[0]);
+                const col = Number(space.id[1]);
+
+                try {
+                    const attacked = computerGameboard.receiveAttack(row, col);
+                    if (attacked) {
+                        const blastIcon = document.createElement("img");
+                        blastIcon.setAttribute("class", "blast-icon");
+                        blastIcon.src = blast;
+                        blastIcon.alt = "This space has previously been attacked " +
+                            "and was a hit";
+                        space.appendChild(blastIcon);
+                    } else if (!attacked) {
+                        const missIcon = document.createElement("img");
+                        missIcon.setAttribute("class", "miss-icon");
+                        missIcon.src = miss;
+                        missIcon.alt = "This space has previously been attacked " +
+                            "and was a miss";
+                        space.appendChild(missIcon);
+                    }
+                } catch(error) {
+                    console.log(error);
+                    alert("Please click on a valid space to attack");
+                }
+            });
+        });
+    }
 }
 
 export function getShipCoords() {
@@ -219,7 +272,8 @@ export function getShipCoords() {
                 "gameboard. Please enter valid coordinates.";
             errorMessageDiv.style.display = "block"; 
         } else {
-            displayBoard(listOfShipInputs);
+            const boards = displayBoard(listOfShipInputs);
+            turn(boards["player"], boards["computer"], true);
         }
     });
 }
