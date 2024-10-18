@@ -33,21 +33,27 @@ export class Gameboard {
                 if (this.board[row][col + i] !== "_") {
                     throw new Error("Cannot place ship here because it " +
                         "overlaps with another ship");
-                } else {
-                    this.board[row][col + i] = newShip;
-                    this.ships.push(newShip);
-                }
+                } 
             }
+
+            for (let i = 0; i < shipLength; i++) {
+                this.board[row][col + i] = newShip;
+            }
+            
+            this.ships.push(newShip);
         } else if (orientation === "vertical") {
             for (let i = 0; i < shipLength; i++) {
                 if (this.board[row + i][col] !== "_") {
                     throw new Error("Cannot place ship here because it " + 
                         "overlaps with another ship");
-                } else {
-                    this.board[row + i][col] = newShip;
-                    this.ships.push(newShip);
-                }
+                } 
             }
+
+            for (let i = 0; i < shipLength; i++) {
+                this.board[row + i][col] = newShip;
+            }
+                    
+            this.ships.push(newShip);
         } else {
             throw new Error("Please specify either 'horizontal' or 'vertical' " +
                 "for the orientation of the ship");
@@ -98,5 +104,9 @@ export class Gameboard {
 
     showAttackedSpaces() {
         return this.attackedSpaces;
+    }
+
+    showBoard() {
+        return this.board
     }
 }

@@ -258,6 +258,7 @@ function turn(playerBoard, computerBoard, playerTurn) {
 
                 try {
                     const attacked = computerGameboard.receiveAttack(row, col);
+
                     if (attacked) {
                         const blastIcon = document.createElement("img");
                         blastIcon.setAttribute("class", "blast-icon");
@@ -273,6 +274,8 @@ function turn(playerBoard, computerBoard, playerTurn) {
                             "and was a miss";
                         space.appendChild(missIcon);
                     }
+
+                    
                 } catch(error) {
                     console.log(error);
                     alert("Please click on a valid space to attack");

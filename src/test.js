@@ -268,6 +268,20 @@ function boardTests() {
             "specify appropriate cooridinates");
         }
     );
+    
+    test("placing overlapping ships throws error and does not result in ships " +
+        " being placed",
+        () => {
+            const testBoard = new Gameboard(10, 10);
+            testBoard.placeShip(5, 3, 5, "vertical");
+            testBoard.placeShip(0, 2, 4, "horizontal");
+            try {
+                testBoard.placeShip(0, 1, 3, "horizontal");
+            } catch(error) {
+                expect(testBoard.showBoard()[0][1]).toBe("_");
+            }
+        }
+    );
 }
 
 shipTests();

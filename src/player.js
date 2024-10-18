@@ -1,6 +1,4 @@
 import {Gameboard} from "./gameboard.js";
-import blast from "./images/blast.png";
-import miss from "./images/x.png";
 
 class Player {
     constructor(rows, cols, board) {
