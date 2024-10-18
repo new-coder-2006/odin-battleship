@@ -181,9 +181,65 @@ function displayBoard(shipInputs) {
     return {"player": playerBoard, "computer": computerBoard};
 }
 
+function placeComputerShips(computer) {
+    const computerGameboard = computer.getGameboard();
+    let possibleSpaces = [];
+
+    for (let i = 0; i < 10; i++) {
+        for (let j = 0; j < 10; j++) {
+            possibleSpaces.push(String(i) + String(j));
+        }
+    }
+
+    for (let ship in SHIP_LENGTHS) {
+        let placed = false;
+
+        while (!placed) {
+            try {
+                const randomRow = Math.floor(Math.random() * 10);
+                const randomColumn = Math.floor(Math.random() * 10);
+                const randomOrientation = Math.floor(Math.random() * 2);
+                console.log(randomRow, randomColumn);
+                let orientation;
+
+                if (randomOrientation === 0) {
+                    orientation = "horizontal";
+                } else {
+                    orientation = "vertical";
+                }
+
+                computerGameboard.placeShip(
+                    randomRow, 
+                    randomColumn, 
+                    SHIP_LENGTHS[ship],
+                    orientation
+                );
+                placed = true;
+                const shipCoords = calculateCoords(
+                    ship,
+                    orientation,
+                    randomRow,
+                    randomColumn
+                );
+                possibleSpaces = possibleSpaces.filter(space => 
+                    !arrayIsContained(
+                        shipCoords, 
+                        [Number(space[0]), Number(space[1])]
+                    )
+                );
+                console.log(possibleSpaces);
+            } catch(error) {
+                placed = false;
+            }
+        }
+    }
+}
+
 function turn(playerBoard, computerBoard, playerTurn) {
     const player = new RealPlayer(ROWS, COLS, playerBoard);
     const computer = new ComputerPlayer(ROWS, COLS, computerBoard);
+
+    placeComputerShips(computer);
 
     if (playerTurn) {
         const header = document.querySelector(".header");
