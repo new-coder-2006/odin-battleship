@@ -235,12 +235,7 @@ function placeComputerShips(computer) {
     }
 }
 
-function turn(playerBoard, computerBoard, playerTurn) {
-    const player = new RealPlayer(ROWS, COLS, playerBoard);
-    const computer = new ComputerPlayer(ROWS, COLS, computerBoard);
-
-    placeComputerShips(computer);
-
+function turn(playerBoard, computerBoard, playerTurn, player, computer) {
     if (playerTurn) {
         const header = document.querySelector(".header");
         const yourTurn = document.createElement("h1");
@@ -251,37 +246,43 @@ function turn(playerBoard, computerBoard, playerTurn) {
         const spaces = computerBoard.querySelectorAll(".space");
         const computerGameboard = computer.getGameboard();
 
+        function addSpaceListener(space) {
+            const row = Number(space.id[0]);
+            const col = Number(space.id[1]);
+
+            try {
+                const attacked = computerGameboard.receiveAttack(row, col);
+
+                if (attacked) {
+                    const blastIcon = document.createElement("img");
+                    blastIcon.setAttribute("class", "blast-icon");
+                    blastIcon.src = blast;
+                    blastIcon.alt = "This space has previously been attacked " +
+                        "and was a hit";
+                    space.appendChild(blastIcon);
+                } else if (!attacked) {
+                    const missIcon = document.createElement("img");
+                    missIcon.setAttribute("class", "miss-icon");
+                    missIcon.src = miss;
+                    missIcon.alt = "This space has previously been attacked " +
+                        "and was a miss";
+                    space.appendChild(missIcon);
+                }
+
+                turn(playerBoard, computerBoard, false, player, computer);
+            } catch(error) {
+                console.log(error);
+                alert("Please click on a valid space to attack");
+            }
+        }
+
         spaces.forEach(space => {
             space.addEventListener("click", () => {
-                const row = Number(space.id[0]);
-                const col = Number(space.id[1]);
-
-                try {
-                    const attacked = computerGameboard.receiveAttack(row, col);
-
-                    if (attacked) {
-                        const blastIcon = document.createElement("img");
-                        blastIcon.setAttribute("class", "blast-icon");
-                        blastIcon.src = blast;
-                        blastIcon.alt = "This space has previously been attacked " +
-                            "and was a hit";
-                        space.appendChild(blastIcon);
-                    } else if (!attacked) {
-                        const missIcon = document.createElement("img");
-                        missIcon.setAttribute("class", "miss-icon");
-                        missIcon.src = miss;
-                        missIcon.alt = "This space has previously been attacked " +
-                            "and was a miss";
-                        space.appendChild(missIcon);
-                    }
-
-                    
-                } catch(error) {
-                    console.log(error);
-                    alert("Please click on a valid space to attack");
-                }
+                addSpaceListener(space);
             });
         });
+    } else {
+
     }
 }
 
@@ -332,7 +333,11 @@ export function getShipCoords() {
             errorMessageDiv.style.display = "block"; 
         } else {
             const boards = displayBoard(listOfShipInputs);
-            turn(boards["player"], boards["computer"], true);
+            const player = new RealPlayer(ROWS, COLS, boards["player"]);
+            const computer = new ComputerPlayer(ROWS, COLS, boards["computer"]);
+
+            placeComputerShips(computer);
+            turn(boards["player"], boards["computer"], true, player, computer);
         }
     });
 }
