@@ -235,69 +235,98 @@ function placeComputerShips(computer) {
     }
 }
 
+function placePlayerShips(player, inputs) {
+    const playerBoard = player.getGameboard();
+    for (let i = 0; i < inputs.length; i++) {
+        playerBoard.placeShip(
+            inputs[i]["row"] - 1, 
+            inputs[i]["col"] - 1, 
+            SHIP_LENGTHS[inputs[i]["ship"]], 
+            inputs[i]["orientation"]
+        );
+    }
+}
+
+function handleSpaceClick(
+    event, 
+    computerGameboard, 
+    turn, 
+    playerBoard, 
+    computerBoard, 
+    player, 
+    computer
+) {
+    const space = event.target;
+    const row = Number(space.id[0]);
+    const col = Number(space.id[1]);
+
+    try {
+        const attacked = computerGameboard.receiveAttack(row, col);
+
+        if (attacked) {
+            const blastIcon = document.createElement("img");
+            blastIcon.setAttribute("class", "blast-icon");
+            blastIcon.src = blast;
+            blastIcon.alt = "This space has previously been attacked and was a hit";
+            space.appendChild(blastIcon);
+        } else {
+            const missIcon = document.createElement("img");
+            missIcon.setAttribute("class", "miss-icon");
+            missIcon.src = miss;
+            missIcon.alt = "This space has previously been attacked and was a miss";
+            space.appendChild(missIcon);
+        }
+
+        // After an attack, move to the next turn
+        turn(playerBoard, computerBoard, false, player, computer);
+    } catch(error) {
+        console.log(error);
+        alert("Please click on a valid space to attack");
+    }
+}
+
 function turn(playerBoard, computerBoard, playerTurn, player, computer) {
     const computerGameboard = computer.getGameboard();
-
-    function addSpaceListener(space) {
-        const row = Number(space.id[0]);
-        const col = Number(space.id[1]);
-
-        try {
-            const attacked = computerGameboard.receiveAttack(row, col);
-
-            if (attacked) {
-                const blastIcon = document.createElement("img");
-                blastIcon.setAttribute("class", "blast-icon");
-                blastIcon.src = blast;
-                blastIcon.alt = "This space has previously been attacked " +
-                    "and was a hit";
-                space.appendChild(blastIcon);
-            } else if (!attacked) {
-                const missIcon = document.createElement("img");
-                missIcon.setAttribute("class", "miss-icon");
-                missIcon.src = miss;
-                missIcon.alt = "This space has previously been attacked " +
-                    "and was a miss";
-                space.appendChild(missIcon);
-            }
-
-            turn(playerBoard, computerBoard, false, player, computer);
-        } catch(error) {
-            console.log(error);
-            alert("Please click on a valid space to attack");
-        }
-    }
+    const spaces = computerBoard.querySelectorAll(".space");
 
     if (playerTurn) {
         const header = document.querySelector(".header");
         const yourTurn = document.createElement("h1");
-        yourTurn.textContent = "It's your turn! Click a space on the " + 
-            "computer's board to attack!";
+        yourTurn.textContent = "It's your turn! Click a space on the computer's board to attack!";
         header.appendChild(yourTurn);
 
-        const spaces = computerBoard.querySelectorAll(".space");
-
         spaces.forEach(space => {
-            space.addEventListener("click", () => {
-                addSpaceListener(space);
-            });
+            space.addEventListener("click", (event) => handleSpaceClick(event, computerGameboard, turn, playerBoard, computerBoard, player, computer), { once: true });
         });
     } else {
+        spaces.forEach(space => {
+            // Remove event listeners for the computer's turn, no need for further player input
+            space.replaceWith(space.cloneNode(true));  // This is a trick to remove all event listeners
+        });
+        try {
+            const row = Math.floor(Math.random() * 10);
+            const col = Math.floor(Math.random() * 10);
+            const attacked = computerGameboard.receiveAttack(row, col);
 
+            if (attacked) {
+
+            }
+        } catch {
+
+        }
     }
 }
 
 export function getShipCoords() {
     const startButton = document.querySelector(".start-game");
     const errorMessageDiv = document.querySelector(".error-message");
+    const listOfShipInputs = [];
 
     startButton.addEventListener("click", () => {
         const coordList = [];
         let overlapDetected = false;
 
         errorMessageDiv.style.display = "none";
-
-        const listOfShipInputs = [];
 
         for (let ship in SHIP_LENGTHS) {
             const shipInputs = getShipInputs(ship);
@@ -338,6 +367,7 @@ export function getShipCoords() {
             const computer = new ComputerPlayer(ROWS, COLS, boards["computer"]);
 
             placeComputerShips(computer);
+            placePlayerShips(player, listOfShipInputs);
             turn(boards["player"], boards["computer"], true, player, computer);
         }
     });
