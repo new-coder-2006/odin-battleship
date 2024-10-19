@@ -236,6 +236,38 @@ function placeComputerShips(computer) {
 }
 
 function turn(playerBoard, computerBoard, playerTurn, player, computer) {
+    const computerGameboard = computer.getGameboard();
+
+    function addSpaceListener(space) {
+        const row = Number(space.id[0]);
+        const col = Number(space.id[1]);
+
+        try {
+            const attacked = computerGameboard.receiveAttack(row, col);
+
+            if (attacked) {
+                const blastIcon = document.createElement("img");
+                blastIcon.setAttribute("class", "blast-icon");
+                blastIcon.src = blast;
+                blastIcon.alt = "This space has previously been attacked " +
+                    "and was a hit";
+                space.appendChild(blastIcon);
+            } else if (!attacked) {
+                const missIcon = document.createElement("img");
+                missIcon.setAttribute("class", "miss-icon");
+                missIcon.src = miss;
+                missIcon.alt = "This space has previously been attacked " +
+                    "and was a miss";
+                space.appendChild(missIcon);
+            }
+
+            turn(playerBoard, computerBoard, false, player, computer);
+        } catch(error) {
+            console.log(error);
+            alert("Please click on a valid space to attack");
+        }
+    }
+
     if (playerTurn) {
         const header = document.querySelector(".header");
         const yourTurn = document.createElement("h1");
@@ -244,37 +276,6 @@ function turn(playerBoard, computerBoard, playerTurn, player, computer) {
         header.appendChild(yourTurn);
 
         const spaces = computerBoard.querySelectorAll(".space");
-        const computerGameboard = computer.getGameboard();
-
-        function addSpaceListener(space) {
-            const row = Number(space.id[0]);
-            const col = Number(space.id[1]);
-
-            try {
-                const attacked = computerGameboard.receiveAttack(row, col);
-
-                if (attacked) {
-                    const blastIcon = document.createElement("img");
-                    blastIcon.setAttribute("class", "blast-icon");
-                    blastIcon.src = blast;
-                    blastIcon.alt = "This space has previously been attacked " +
-                        "and was a hit";
-                    space.appendChild(blastIcon);
-                } else if (!attacked) {
-                    const missIcon = document.createElement("img");
-                    missIcon.setAttribute("class", "miss-icon");
-                    missIcon.src = miss;
-                    missIcon.alt = "This space has previously been attacked " +
-                        "and was a miss";
-                    space.appendChild(missIcon);
-                }
-
-                turn(playerBoard, computerBoard, false, player, computer);
-            } catch(error) {
-                console.log(error);
-                alert("Please click on a valid space to attack");
-            }
-        }
 
         spaces.forEach(space => {
             space.addEventListener("click", () => {
