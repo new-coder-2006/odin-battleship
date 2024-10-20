@@ -129,7 +129,7 @@ function createBoard(boardType, rows, cols, shipInputs) {
         for (let j = 0; j < cols; j++) {
             const colContainer = document.createElement("div");
             colContainer.setAttribute("class", "space");
-            colContainer.setAttribute("id", String(i) + String(j));
+            colContainer.setAttribute("id", boardType[0] + String(i) + String(j));
             
             if (boardType === "player") {
                 for (let k = 0; k < shipInputs.length; k++) {
@@ -257,8 +257,8 @@ function handleSpaceClick(
     computer
 ) {
     const space = event.target;
-    const row = Number(space.id[0]);
-    const col = Number(space.id[1]);
+    const row = Number(space.id[1]);
+    const col = Number(space.id[2]);
 
     try {
         const attacked = computerGameboard.receiveAttack(row, col);
@@ -287,18 +287,20 @@ function handleSpaceClick(
 
 function turn(playerBoard, computerBoard, playerTurn, player, computer) {
     const computerGameboard = computer.getGameboard();
+    const playerGameboard = player.getGameboard();
     const spaces = computerBoard.querySelectorAll(".space");
+    const turnHeader = document.querySelector(".turn");
 
     if (playerTurn) {
-        const header = document.querySelector(".header");
         const yourTurn = document.createElement("h1");
         yourTurn.textContent = "It's your turn! Click a space on the computer's board to attack!";
-        header.appendChild(yourTurn);
+        turnHeader.appendChild(yourTurn);
 
         spaces.forEach(space => {
             space.addEventListener("click", (event) => handleSpaceClick(event, computerGameboard, turn, playerBoard, computerBoard, player, computer), { once: true });
         });
     } else {
+        turnHeader.textContent = "";
         spaces.forEach(space => {
             // Remove event listeners for the computer's turn, no need for further player input
             space.replaceWith(space.cloneNode(true));  // This is a trick to remove all event listeners
@@ -306,13 +308,32 @@ function turn(playerBoard, computerBoard, playerTurn, player, computer) {
         try {
             const row = Math.floor(Math.random() * 10);
             const col = Math.floor(Math.random() * 10);
-            const attacked = computerGameboard.receiveAttack(row, col);
+            const attacked = playerGameboard.receiveAttack(row, col);
+            const attackedSpace = document.getElementById("p" + String(row) + String(col));
 
             if (attacked) {
-
+                attackedSpace.innerHTML = "";
+                const blastIcon = document.createElement("img");
+                blastIcon.setAttribute("class", "blast-icon");
+                blastIcon.src = blast;
+                blastIcon.alt = "This space has previously been attacked and was a hit";
+                if (attackedSpace.firstChild) {
+                    attackedSpace.insertBefore(blastIcon, attackedSpace.firstChild);
+                } else {
+                    attackedSpace.appendChild(blastIcon);
+                }
+            } else {
+                const missIcon = document.createElement("img");
+                missIcon.setAttribute("class", "miss-icon");
+                missIcon.src = miss;
+                missIcon.alt = "This space has previously been attacked and was a miss";
+                attackedSpace.appendChild(missIcon);
             }
-        } catch {
 
+            turn(playerBoard, computerBoard, true, player, computer);
+        } catch(error) {
+            console.log(error);
+            turn(playerBoard, computerBoard, false, player, computer);
         }
     }
 }
