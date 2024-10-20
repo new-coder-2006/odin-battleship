@@ -277,8 +277,13 @@ function handleSpaceClick(
             space.appendChild(missIcon);
         }
 
-        // After an attack, move to the next turn
-        turn(playerBoard, computerBoard, false, player, computer);
+        // After an attack, check whether the game is over and if not, move to the next turn
+        if (computerGameboard.shipsSunk()) {
+            console.log("You won");
+            return;
+        } else {
+            turn(playerBoard, computerBoard, false, player, computer);
+        }
     } catch(error) {
         console.log(error);
         alert("Please click on a valid space to attack");
@@ -330,7 +335,12 @@ function turn(playerBoard, computerBoard, playerTurn, player, computer) {
                 attackedSpace.appendChild(missIcon);
             }
 
-            turn(playerBoard, computerBoard, true, player, computer);
+            if (playerGameboard.shipsSunk()) {
+                console.log("You lost");
+                return;
+            } else {
+                turn(playerBoard, computerBoard, true, player, computer);
+            }
         } catch(error) {
             console.log(error);
             turn(playerBoard, computerBoard, false, player, computer);
