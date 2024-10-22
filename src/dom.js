@@ -8,7 +8,8 @@ import submarine from "./images/submarine.png";
 import destroyer from "./images/destroyer.png";
 import blast from "./images/blast.png";
 import miss from "./images/x.png";
-
+import loser from "./images/loser.jpg";
+import winnerImage from "./images/winner.jpg";
 
 const ROWS = 10;
 const COLS = 10;
@@ -255,15 +256,21 @@ function displayWinnerScreen(winner) {
     winAnnouncement.setAttribute("class", "win-announcement");
     const mainContainer = document.querySelector(".main-container");
     mainContainer.innerHTML = "";
+    const resultImage = document.createElement("img");
+    resultImage.setAttribute("class", "result-image");
 
     if (winner === "player") {
         winAnnouncement.textContent = "You won!";
+        resultImage.src = winnerImage;
+        resultImage.alt = "Image of a triumphant woman";
     } else {
         winAnnouncement.textContent = "You lost!";
+        resultImage.src = loser;
+        resultImage.alt = "Image of a red neon sign that says 'Loser'";
     }
 
     header.appendChild(winAnnouncement);
-
+    header.appendChild(resultImage);
 }
 
 function handleSpaceClick(

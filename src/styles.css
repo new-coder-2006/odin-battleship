@@ -59,6 +59,11 @@ body {
     border-right: solid 5px black;
 }
 
+.result-image {
+    height: 400px;
+    width: auto;
+}
+
 .row {
     display: grid;
     grid-template-columns: repeat(10, 50px);
