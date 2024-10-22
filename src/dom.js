@@ -247,6 +247,25 @@ function placePlayerShips(player, inputs) {
     }
 }
 
+function displayWinnerScreen(winner) {
+    const turnHeader = document.querySelector(".turn");
+    turnHeader.remove();
+    const header = document.querySelector(".header");
+    const winAnnouncement = document.createElement("h1");
+    winAnnouncement.setAttribute("class", "win-announcement");
+    const mainContainer = document.querySelector(".main-container");
+    mainContainer.innerHTML = "";
+
+    if (winner === "player") {
+        winAnnouncement.textContent = "You won!";
+    } else {
+        winAnnouncement.textContent = "You lost!";
+    }
+
+    header.appendChild(winAnnouncement);
+
+}
+
 function handleSpaceClick(
     event, 
     computerGameboard, 
@@ -279,7 +298,7 @@ function handleSpaceClick(
 
         // After an attack, check whether the game is over and if not, move to the next turn
         if (computerGameboard.shipsSunk()) {
-            console.log("You won");
+            displayWinnerScreen("player");
             return;
         } else {
             turn(playerBoard, computerBoard, false, player, computer);
@@ -336,7 +355,7 @@ function turn(playerBoard, computerBoard, playerTurn, player, computer) {
             }
 
             if (playerGameboard.shipsSunk()) {
-                console.log("You lost");
+                displayWinnerScreen("computer");
                 return;
             } else {
                 turn(playerBoard, computerBoard, true, player, computer);
