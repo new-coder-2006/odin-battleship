@@ -235,6 +235,7 @@ function placeComputerShips(computer) {
 }
 
 function placePlayerShips(player, inputs) {
+    console.log(inputs);
     const playerBoard = player.getGameboard();
     for (let i = 0; i < inputs.length; i++) {
         playerBoard.placeShip(
@@ -425,6 +426,7 @@ export function getShipCoords() {
         }
 
         if (overlapDetected) {
+            listOfShipInputs = [];
             errorMessageDiv.textContent = 
                 "The coordinates you entered are invalid because they " +
                 "would cause at least two of the ships to overlap on the " +
