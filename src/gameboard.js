@@ -3,7 +3,9 @@ import { arrayIsContained } from "./dom";
 
 export class Gameboard {
     constructor(rows, cols) {
-        this.board = Array(rows).fill().map(() => Array(cols).fill('_'));
+        this.rows = rows;
+        this.cols = cols;
+        this.board = Array(this.rows).fill().map(() => Array(this.cols).fill('_'));
         this.misses = [];
         this.ships = [];
         this.attackedSpaces = [];
@@ -108,5 +110,10 @@ export class Gameboard {
 
     showBoard() {
         return this.board
+    }
+
+    clearBoard() {
+        this.board = Array(this.rows).fill().map(() => Array(this.cols).fill('_'));
+
     }
 }

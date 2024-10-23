@@ -1,5 +1,3 @@
-import {Gameboard} from "./gameboard.js";
-import {Ship} from "./ship.js";
 import {RealPlayer, ComputerPlayer} from "./player.js";
 import carrier from "./images/carrier.png";
 import battleship from "./images/battleship.png";
@@ -74,8 +72,8 @@ export function calculateCoords(shipType, orientation, startingRow, startingCol)
     const coords = [];
 
     if (
-        (orientation === "horizontal" && (Number(startingCol) + length) > COLS) ||
-        (orientation === "vertical" && (Number(startingRow) + length) > ROWS) 
+        (orientation === "horizontal" && (Number(startingCol) + length) > COLS + 1) ||
+        (orientation === "vertical" && (Number(startingRow) + length) > ROWS + 1) 
     ) {
         throw new Error(shipLowerCase + " does not fit on board; please " +
             "specify appropriate cooridinates");
@@ -269,8 +267,16 @@ function displayWinnerScreen(winner) {
         resultImage.alt = "Image of a red neon sign that says 'Loser'";
     }
 
+    const playAgain = document.createElement("button");
+    playAgain.setAttribute("class", "play-again");
+    playAgain.textContent = "Play Again?";
+    playAgain.addEventListener("click", () => {
+        location.reload();
+    });
+
     header.appendChild(winAnnouncement);
     header.appendChild(resultImage);
+    header.appendChild(playAgain);
 }
 
 function handleSpaceClick(
@@ -377,7 +383,7 @@ function turn(playerBoard, computerBoard, playerTurn, player, computer) {
 export function getShipCoords() {
     const startButton = document.querySelector(".start-game");
     const errorMessageDiv = document.querySelector(".error-message");
-    const listOfShipInputs = [];
+    let listOfShipInputs = [];
 
     startButton.addEventListener("click", () => {
         const coordList = [];
@@ -393,16 +399,22 @@ export function getShipCoords() {
                 return;
             }
             
-            const shipCoords = calculateCoords(
-                ship, 
-                shipInputs["orientation"],
-                shipInputs["row"],
-                shipInputs["col"]
-            );
-
-            coordList.push(shipCoords);
-            shipInputs["shipCoords"] = shipCoords;
-            listOfShipInputs.push(shipInputs);
+            try {
+                const shipCoords = calculateCoords(
+                    ship, 
+                    shipInputs["orientation"],
+                    shipInputs["row"],
+                    shipInputs["col"]
+                );
+    
+                coordList.push(shipCoords);
+                shipInputs["shipCoords"] = shipCoords;
+                listOfShipInputs.push(shipInputs);
+            } catch(error) {
+                listOfShipInputs = [];
+                throw new Error(ship + " does not fit on board; please " +
+                    "specify appropriate cooridinates");
+            }
         }
 
         for (let i = 0; i < coordList.length - 1; i++) {
