@@ -1,22 +1,22 @@
 export class Ship {
-    constructor(length) {
-        if (length < 0) {
-            throw new Error("Ship length cannot be negative");
-        } else if (!Number.isInteger(length)) {
-            throw new Error("Ship length must be an integer");
-        } 
-
-        this.length = length;
-        this.timesHit = 0;
-        this.sunk = false;
+  constructor(length) {
+    if (length < 0) {
+      throw new Error("Ship length cannot be negative");
+    } else if (!Number.isInteger(length)) {
+      throw new Error("Ship length must be an integer");
     }
 
-    hit() {
-        this.timesHit++;
-    }
+    this.length = length;
+    this.timesHit = 0;
+    this.sunk = false;
+  }
 
-    isSunk() {
-        this.sunk = (this.timesHit >= this.length);
-        return this.sunk;
-    }
+  hit() {
+    this.timesHit++;
+  }
+
+  isSunk() {
+    this.sunk = this.timesHit >= this.length;
+    return this.sunk;
+  }
 }
