@@ -1,129 +1,135 @@
 /* styles.css */
 body {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-image: url("images/battleship-background.jpg");
-    background-size: cover; 
-    background-position: center; 
-    background-repeat: no-repeat; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-image: url("images/battleship-background.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 }
 
 .battleship-logo {
-    height: 200px;
-    width: auto;
+  height: 200px;
+  width: auto;
 }
 
 .board {
-    display: grid;
-    grid-template-columns: 500px 500px;
-    background-color: rgb(19, 246, 250);
-    height: 510px;
-    width: 1006px;
+  display: grid;
+  grid-template-columns: 500px 500px;
+  background-color: rgb(19, 246, 250);
+  height: 510px;
+  width: 1006px;
 }
 
 .board-label {
-    font-family: 'Battambang', sans-serif;
-    color: white;
+  font-family: "Battambang", sans-serif;
+  color: white;
 }
 
 .button-container {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .computer-board {
-    border-left: solid 5px black;
+  border-left: solid 5px black;
 }
 
 .error-message {
-    width: 700px;
-    color: red;
-    display: none;
-    line-height: 1.2;
+  width: 700px;
+  color: red;
+  display: none;
+  line-height: 1.2;
 }
 
 .header {
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 6px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 6px;
 }
 
 .player-board {
-    border-right: solid 5px black;
+  border-right: solid 5px black;
 }
 
 .result-image {
-    height: 400px;
-    width: auto;
-    padding-bottom: 10px;
+  height: 400px;
+  width: auto;
+  padding-bottom: 10px;
 }
 
 .row {
-    display: grid;
-    grid-template-columns: repeat(10, 50px);
+  display: grid;
+  grid-template-columns: repeat(10, 50px);
 }
 
 .ship {
-    display: grid;
-    grid-template-columns: 125px 50px 150px 50px 175px 100px;
-    gap: 10px;
-    padding-bottom: 10px;
+  display: grid;
+  grid-template-columns: 125px 50px 150px 50px 175px 100px;
+  gap: 10px;
+  padding-bottom: 10px;
 }
 
 .ships-form {
-    background-color:rgb(19, 246, 250);
-    padding: 10px;
-    border-radius: 5px;
-    margin-top: 50px;
-    font-family: 'Battambang', sans-serif;
-    font-size: 15px;
+  background-color: rgb(19, 246, 250);
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 50px;
+  font-family: "Battambang", sans-serif;
+  font-size: 15px;
 }
 
-.ship-icon, .blast-icon, .miss-icon {
-    height: 50px;
-    width: 50px;
+.ship-icon,
+.blast-icon,
+.miss-icon {
+  height: 50px;
+  width: 50px;
 }
 
 .space {
-    border: solid 0.1px rgb(4, 4, 4);
-    height: 50px;
-    width: 50px;
+  border: solid 0.1px rgb(4, 4, 4);
+  height: 50px;
+  width: 50px;
 }
 
-.start-game, .play-again {
-    background-color: #007BFF;
-    color: white;
-    padding: 15px 30px; 
-    font-size: 18px; 
-    font-weight: bold; 
-    border: none; 
-    border-radius: 8px; 
-    cursor: pointer; 
-    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); 
-    transition: background-color 0.3s, box-shadow 0.3s; 
+.start-game,
+.play-again {
+  background-color: #007bff;
+  color: white;
+  padding: 15px 30px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s, box-shadow 0.3s;
 }
-  
-.start-game:hover, .play-again:hover {
-    background-color: #0056b3; 
-    box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3); 
+
+.start-game:hover,
+.play-again:hover {
+  background-color: #0056b3;
+  box-shadow: 0px 6px 8px rgba(0, 0, 0, 0.3);
 }
-  
-.start-game:active, .play-again:active {
-    background-color: #004080; 
-    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2); 
+/* Styles to apply to buttons when they are clicked on */
+.start-game:active,
+.play-again:active {
+  background-color: #004080;
+  box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.2);
 }
-  
-.start-game:focus, .play-again:focus {
-    outline: none; 
-    box-shadow: 0px 0px 0px 4px rgba(0, 123, 255, 0.5); 
+
+.start-game:focus,
+.play-again:focus {
+  outline: none;
+  box-shadow: 0px 0px 0px 4px rgba(0, 123, 255, 0.5);
 }
 
 .win-announcement {
-    font-size: 48px;
-    margin-top: 0;
-    padding-top: 0;
+  font-size: 48px;
+  margin-top: 0;
+  padding-top: 0;
 }
